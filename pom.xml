@@ -26,8 +26,8 @@
     <dependencies>
         <dependency>
             <groupId>dk.jlo.scorekeeper</groupId>
-            <artifactId>ejb</artifactId>
-            <type>ejb</type>
+            <artifactId>scorekeeper-ear</artifactId>
+            <type>ear</type>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
