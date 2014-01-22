@@ -33,7 +33,8 @@ public class MyTest {
 
     @Test
     public void test() throws IOException {
-        URL url = new URL("http://localhost:8080/ejb-1.0.0-SNAPSHOT/MatchWS/MatchWS");
+        // FIXME Use port no etc. from Arquillian
+        URL url = new URL("http://localhost:8180/ejb-1.0.0-SNAPSHOT/MatchWS/MatchWS");
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         String xmlInput = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +

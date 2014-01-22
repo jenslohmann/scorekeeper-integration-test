@@ -6,6 +6,7 @@
         <configuration>
             <!-- property name="javaHome">${jdk.home}</property -->
             <property name="jbossHome">/home/jenkins/apps/jboss-as-7.1.1.Final</property>
+            <!-- Don't do periodic GC during test -->
             <property name="javaVmArguments">-Djboss.socket.binding.port-offset=100 -Djboss.management.native.port=9054
                 -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000
                 -Xmx512m -Xmx768m -XX:MaxPermSize=256m
@@ -17,7 +18,7 @@
         <property name="deploymentExportPath">target/deployments</property>
     </engine>
 </arquillian>
-        <!-- Don't do periodic GC during test -->
+
         <!-- -Djava.net.preferIPv4Stack=true
         -Djava.util.logging.manager=org.jboss.logmanager.LogManager
         -Djava.endorsed.dirs=${jboss.home}/lib/endorsed
