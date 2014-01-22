@@ -6,16 +6,18 @@
         <configuration>
             <!-- property name="javaHome">${jdk.home}</property -->
             <property name="jbossHome">/home/jenkins/apps/jboss-as-7.1.1.Final</property>
-            <property name="httpPort">8080</property>
+            <property name="httpPort">8180</property>
             <property name="rmiPort">1099</property>
             <property name="javaVmArguments">-Xmx512m -Xmx768m -XX:MaxPermSize=256m
-                -Djava.net.preferIPv4Stack=true
+                -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000
+                -Djboss.socket.binding.port-offset=100 -Djboss.management.native.port=9054
+                <!-- Don't do periodic GC during test -->
+                <!-- -Djava.net.preferIPv4Stack=true
                 -Djava.util.logging.manager=org.jboss.logmanager.LogManager
                 -Djava.endorsed.dirs=${jboss.home}/lib/endorsed
-                -Djboss.boot.server.log.dir=${jboss.home}
-                -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000
-                <!-- Don't do periodic GC during test -->
+                -Djboss.boot.server.log.dir=${jboss.home} -->
             </property>
+            <property name="managementPort">9154</property>
         </configuration>
     </container>
     <engine>
