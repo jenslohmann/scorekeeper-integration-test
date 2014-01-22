@@ -9,11 +9,6 @@
             <property name="javaVmArguments">-Djboss.socket.binding.port-offset=100 -Djboss.management.native.port=9054
                 -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000
                 -Xmx512m -Xmx768m -XX:MaxPermSize=256m
-                <!-- Don't do periodic GC during test -->
-                <!-- -Djava.net.preferIPv4Stack=true
-                -Djava.util.logging.manager=org.jboss.logmanager.LogManager
-                -Djava.endorsed.dirs=${jboss.home}/lib/endorsed
-                -Djboss.boot.server.log.dir=${jboss.home} -->
             </property>
             <property name="managementPort">9154</property>
         </configuration>
@@ -22,3 +17,8 @@
         <property name="deploymentExportPath">target/deployments</property>
     </engine>
 </arquillian>
+        <!-- Don't do periodic GC during test -->
+        <!-- -Djava.net.preferIPv4Stack=true
+        -Djava.util.logging.manager=org.jboss.logmanager.LogManager
+        -Djava.endorsed.dirs=${jboss.home}/lib/endorsed
+        -Djboss.boot.server.log.dir=${jboss.home} -->
