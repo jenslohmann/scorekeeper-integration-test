@@ -22,8 +22,7 @@
             <!-- property name="javaHome">${jdk.home}</property -->
             <property name="jbossHome">/Users/jens/apps/jboss-as-7.1.1.Final</property>
             <!-- Don't do periodic GC during test -->
-            <property name="javaVmArguments">
-                -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000
+            <property name="javaVmArguments">-Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000
                 -Xmx512m -Xmx768m -XX:MaxPermSize=256m
             </property>
         </configuration>
