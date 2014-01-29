@@ -27,9 +27,26 @@
             </property>
         </configuration>
     </container>
-</arquillian>
+    <extension qualifier="persistence">
+        <property name="defaultDataSeedStrategy">REFRESH</property>
+        <!-- Dump database for debugging purposes. -->
+        <property name="dumpData">true</property>
+        <property name="dumpDirectory">target/datadumps</property>
+    </extension>
+    <extension qualifier="persistence-dbunit">
+        <property name="schema">scorekeeper</property>
+        <property name="datatypeFactory">org.dbunit.ext.postgresql.PostgresqlDataTypeFactory</property>
+        <property name="excludeTablesFromCleanup">hibernate_sequence</property>
+        <!-- Not using excel data sets; reduce deployment size (??). -->
+        <property name="excludePoi">true</property>
+    </extension>
+    <!-- Does not seem to work, but NameNotFoundException no longer thrown.
+     (http://lists.jboss.org/pipermail/jboss-as7-dev/2011-June/002298.html):
 
-        <!-- -Djava.net.preferIPv4Stack=true
-        -Djava.util.logging.manager=org.jboss.logmanager.LogManager
-        -Djava.endorsed.dirs=${jboss.home}/lib/endorsed
-        -Djboss.boot.server.log.dir=${jboss.home} -->
+    extension qualifier="transaction">
+        <property name="manager">java:jboss/UserTransaction</property>
+    </extension -->
+    <extension qualifier="transaction">
+    <property name="manager">java:jboss/UserTransaction</property>
+</extension>
+</arquillian>

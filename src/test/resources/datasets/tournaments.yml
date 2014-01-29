@@ -1,0 +1,15 @@
+teams:
+  - id: 1
+    version: 1
+    name: A
+  - id: 2
+    version: 1
+    name: B
+
+tournaments:
+  - id: 1
+    version: 1
+    name: A
+  - id: 4
+    version: 1
+    name: Flyveskalle Head to Head
