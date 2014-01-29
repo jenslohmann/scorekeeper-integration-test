@@ -31,7 +31,8 @@
         <property name="defaultDataSeedStrategy">REFRESH</property>
         <!-- Dump database for debugging purposes. -->
         <property name="dumpData">true</property>
-        <property name="dumpDirectory">target/datadumps</property>
+        <!-- The directory is not created if it does not exist (unlike deploymentExportPath). -->
+        <property name="dumpDirectory">target</property>
     </extension>
     <extension qualifier="persistence-dbunit">
         <property name="schema">scorekeeper</property>
