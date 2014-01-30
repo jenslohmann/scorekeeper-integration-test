@@ -6,6 +6,8 @@ import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
+import org.jboss.arquillian.performance.annotation.Performance;
+import org.jboss.arquillian.performance.annotation.PerformanceTest;
 import org.jboss.arquillian.persistence.*;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -28,6 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @PersistenceTest
 @DataSource("java:/ds/postgresDS")
 @UsingDataSet("tournaments.yml")
+@PerformanceTest(resultsThreshold = 1.5)
 public class MyTest {
 
     @Deployment(testable = true, name = "ArqPersistencePluginHack", order = 0)
@@ -40,7 +43,7 @@ public class MyTest {
                         .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                         .addAsResource("META-INF/persistence.xml"))
                 .addAsLibrary(Maven.resolver().resolve("dk.jlo.scorekeeper:model:jar:1.0.0-SNAPSHOT").withoutTransitivity()
-                .asSingleFile());
+                        .asSingleFile());
     }
 
     @Deployment(testable = false, name = "scorekeeper", order = 1)
@@ -66,6 +69,7 @@ public class MyTest {
     @InSequence(2)
     @OperateOnDeployment("scorekeeper")
     @RunAsClient
+    @Performance(time = 20)
     public void test(@ArquillianResource URL testUrl) throws IOException {
         System.out.println("URL:" + testUrl);
         URL url = new URL(testUrl.getProtocol() + "://" + testUrl.getHost() + ":" + testUrl.getPort()

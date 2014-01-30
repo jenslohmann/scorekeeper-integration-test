@@ -108,6 +108,12 @@
             <version>1.0.0.Alpha6</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-performance-impl</artifactId>
+            <version>1.0.0.CR1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
