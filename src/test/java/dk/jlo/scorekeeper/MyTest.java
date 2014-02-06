@@ -77,7 +77,7 @@ public class MyTest {
     @InSequence(2)
     @OperateOnDeployment("scorekeeper")
     @RunAsClient
-    @Performance(time = 500)
+    @Performance(time = 1000)
     public void test(@ArquillianResource URL testUrl) throws IOException {
         System.out.println("URL:" + testUrl);
         URL url = new URL("http://" + testUrl.getHost() + ":" + testUrl.getPort()
