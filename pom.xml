@@ -43,6 +43,13 @@
             <properties>
                 <arquillian.launch>workstation.jlo</arquillian.launch>
             </properties>
+
+            <repositories>
+                <repository>
+                    <id>jenkins.jlo</id>
+                    <url>http://jenkins.jlo:8080/nexus/content/groups/public/</url>
+                </repository>
+            </repositories>
         </profile>
     </profiles>
 
@@ -154,11 +161,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <repositories>
-        <repository>
-            <id>jenkins.jlo</id>
-            <url>http://jenkins.jlo:8080/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
 </project>

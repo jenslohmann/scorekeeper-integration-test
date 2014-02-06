@@ -8,7 +8,11 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.performance.annotation.Performance;
 import org.jboss.arquillian.performance.annotation.PerformanceTest;
-import org.jboss.arquillian.persistence.*;
+import org.jboss.arquillian.persistence.Cleanup;
+import org.jboss.arquillian.persistence.DataSource;
+import org.jboss.arquillian.persistence.PersistenceTest;
+import org.jboss.arquillian.persistence.TestExecutionPhase;
+import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -18,7 +22,11 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -69,10 +77,10 @@ public class MyTest {
     @InSequence(2)
     @OperateOnDeployment("scorekeeper")
     @RunAsClient
-    @Performance(time = 20)
+    @Performance(time = 500)
     public void test(@ArquillianResource URL testUrl) throws IOException {
         System.out.println("URL:" + testUrl);
-        URL url = new URL(testUrl.getProtocol() + "://" + testUrl.getHost() + ":" + testUrl.getPort()
+        URL url = new URL("http://" + testUrl.getHost() + ":" + testUrl.getPort()
                 + "/ejb-1.0.0-SNAPSHOT/MatchWS/MatchWS");
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
