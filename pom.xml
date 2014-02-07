@@ -37,6 +37,14 @@
             <properties>
                 <arquillian.launch>jenkins.jlo</arquillian.launch>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <version>7.1.1.Final</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>workstation.jlo</id>
@@ -50,6 +58,35 @@
                     <url>http://jenkins.jlo:8080/nexus/content/groups/public/</url>
                 </repository>
             </repositories>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.as</groupId>
+                    <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <version>7.1.1.Final</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>wildfly.workstation.jlo</id>
+            <properties>
+                <arquillian.launch>wildfly.workstation.jlo</arquillian.launch>
+            </properties>
+
+            <repositories>
+                <repository>
+                    <id>jenkins.jlo</id>
+                    <url>http://jenkins.jlo:8080/nexus/content/groups/public/</url>
+                </repository>
+            </repositories>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-managed</artifactId>
+                    <version>8.0.0.CR1</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 
@@ -97,12 +134,7 @@
             <artifactId>arquillian-junit-container</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-arquillian-container-managed</artifactId>
-            <version>7.1.1.Final</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
             <artifactId>arquillian-protocol-servlet</artifactId>

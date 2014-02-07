@@ -109,7 +109,7 @@ public class MyTest {
         httpConn.setDoOutput(true);
         httpConn.setDoInput(true);
         OutputStream out = httpConn.getOutputStream();
-        //Write the content of the request to the outputstream of the HTTP Connection.
+        //Write the content of the request to the output stream of the HTTP Connection.
         out.write(b);
         out.close();
         //Ready with sending the request.
