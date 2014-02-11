@@ -47,9 +47,9 @@
             </dependencies>
         </profile>
         <profile>
-            <id>workstation.jlo</id>
+            <id>jboss711.workstation.jlo</id>
             <properties>
-                <arquillian.launch>workstation.jlo</arquillian.launch>
+                <arquillian.launch>jboss711.workstation.jlo</arquillian.launch>
             </properties>
 
             <repositories>

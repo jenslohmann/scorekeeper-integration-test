@@ -7,7 +7,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.performance.annotation.Performance;
-import org.jboss.arquillian.performance.annotation.PerformanceTest;
+// import org.jboss.arquillian.performance.annotation.PerformanceTest;
 import org.jboss.arquillian.persistence.Cleanup;
 import org.jboss.arquillian.persistence.DataSource;
 import org.jboss.arquillian.persistence.PersistenceTest;

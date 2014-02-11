@@ -17,7 +17,7 @@
             <property name="managementPort">9154</property>
         </configuration>
     </container>
-    <container qualifier="workstation.jlo">
+    <container qualifier="jboss711.workstation.jlo">
         <configuration>
             <!-- property name="javaHome">${jdk.home}</property -->
             <property name="jbossHome">/Users/jens/apps/jboss-as-7.1.1.Final</property>
