@@ -38,6 +38,13 @@
             </property>
         </configuration>
     </container>
+    <container qualifier="glassfish4.workstation.jlo">
+        <configuration>
+            <property name="glassFishHome">/Users/jens/apps/glassfish4</property>
+            <property name="adminHost">localhost</property>
+            <property name="adminPort">4848</property>
+        </configuration>
+    </container>
     <extension qualifier="persistence">
         <property name="defaultDataSeedStrategy">REFRESH</property>
         <!-- Dump database for debugging purposes. -->

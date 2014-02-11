@@ -88,6 +88,20 @@
                 </dependency>
             </dependencies>
         </profile>
+        <profile>
+            <id>glassfish4.workstation.jlo</id>
+            <properties>
+                    <arquillian.launch>glassfish4.workstation.jlo</arquillian.launch>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-glassfish-managed-3.1</artifactId>
+                    <version>1.0.0.CR4</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 
     <dependencies>

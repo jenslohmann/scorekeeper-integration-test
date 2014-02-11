@@ -38,7 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @PersistenceTest
 @DataSource("java:/ds/postgresDS")
 @UsingDataSet("tournaments.yml")
-@PerformanceTest(resultsThreshold = 1.5)
+//@PerformanceTest(resultsThreshold = 1.5)
 public class MyTest {
 
     @Deployment(testable = true, name = "ArqPersistencePluginHack", order = 0)
@@ -100,8 +100,9 @@ public class MyTest {
 
         bout.write(xmlInput.getBytes());
         byte[] b = bout.toByteArray();
-        String SOAPAction = "http://ws.scorekeeper.jlo.dk/createMatch";
+        //String SOAPAction = "http://ws.scorekeeper.jlo.dk/createMatch";
         // Set the appropriate HTTP parameters.
+        String SOAPAction = "createMatch";
         httpConn.setRequestProperty("Content-Length", String.valueOf(b.length));
         httpConn.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
         httpConn.setRequestProperty("SOAPAction", SOAPAction);
