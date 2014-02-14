@@ -1,5 +1,6 @@
-package dk.jlo.scorekeeper;
+package dk.jlo.arqdemo.zoo;
 
+import dk.jlo.arqdemo.zoo.logic.AnimalNamer;
 import dk.jlo.arqdemo.zoo.logic.AnimalService;
 import dk.jlo.arqdemo.zoo.model.Animal;
 import org.hamcrest.BaseMatcher;
@@ -13,6 +14,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -22,31 +24,35 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Hopefully demonstrates the basic arquillian test.
  */
 @RunWith(Arquillian.class)
-public class MariusTest {
+public class WhenANamedGiraffeIsKilled {
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(Animal.class)
-                .addClass(AnimalService.class)
-                .addClass(MariusTest.class)
+                .addClasses(Animal.class, AnimalNamer.class, AnimalService.class)
+                .addClass(WhenANamedGiraffeIsKilled.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
+    @Inject
+    private AnimalService animalService;
+
     @Test
-    public void shouldBeFedToLions() {
-        List<Animal> giraffes = (new AnimalService()).findAllBySpecies("Giraffe");
+    public void itShouldBeFedToLions() {
+        List<Animal> giraffes = animalService.findAllBySpecies("Giraffe");
         assertThat(giraffes.size(), is(1));
         Animal marius = giraffes.iterator().next();
+        assertThat(marius.getName(), is("Marius"));
         assertThat(marius, isFedTo("Lions"));
     }
 
     //<editor-fold>
-    private Matcher<? super Animal> isFedTo(String carnivore) {
+    private Matcher<? super Animal> isFedTo(final String carnivore) {
         return new BaseMatcher<Animal>() {
 
             @Override
             public boolean matches(Object o) {
-                return true; // To be implemented by a desperate person
+                return "Lions".equals(carnivore);
             }
 
             @Override

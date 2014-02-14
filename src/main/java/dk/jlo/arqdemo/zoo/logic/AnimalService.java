@@ -2,23 +2,25 @@ package dk.jlo.arqdemo.zoo.logic;
 
 import dk.jlo.arqdemo.zoo.model.Animal;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimalService {
 
-    @PersistenceContext
-    private EntityManager em;
+    //    @PersistenceContext
+//    private EntityManager em;
+
+    @Inject
+    private AnimalNamer animalNamer;
 
     public List<Animal> findAllBySpecies(String species) {
         // Test first, code later. Assume Giraffe!
         ArrayList<Animal> animals = new ArrayList<Animal>(1);
-        Animal marius = new Animal();
-        marius.setName("Marius");
-        marius.setSpecies("Giraffe");
-        animals.add(marius);
+        Animal animal = new Animal();
+        animal.setName(animalNamer.produceNameFor(species));
+        animal.setSpecies(species);
+        animals.add(animal);
         return animals;
     }
 }
