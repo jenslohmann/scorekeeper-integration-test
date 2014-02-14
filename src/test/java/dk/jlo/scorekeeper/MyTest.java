@@ -1,5 +1,6 @@
 package dk.jlo.scorekeeper;
 
+import dk.jlo.util.WSClient;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
@@ -7,7 +8,6 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.performance.annotation.Performance;
-// import org.jboss.arquillian.performance.annotation.PerformanceTest;
 import org.jboss.arquillian.persistence.Cleanup;
 import org.jboss.arquillian.persistence.DataSource;
 import org.jboss.arquillian.persistence.PersistenceTest;
@@ -22,16 +22,13 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+// import org.jboss.arquillian.performance.annotation.PerformanceTest;
 
 //@CreateSchema({"schema-creation.sql"})
 @RunWith(Arquillian.class)
@@ -47,10 +44,10 @@ public class MyTest {
         return ShrinkWrap.create(EnterpriseArchive.class, "test.ear")
                 .addAsLibrary(ShrinkWrap.create(JavaArchive.class, "test.jar")
                         .addClass(MyTest.class)
-                                // Avoid BeanManager not found (enables CDI)
                         .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                         .addAsResource("META-INF/persistence.xml"))
-                .addAsLibrary(Maven.resolver().resolve("dk.jlo.scorekeeper:model:jar:1.0.0-SNAPSHOT").withoutTransitivity()
+                .addAsLibrary(Maven.resolver().resolve("dk.jlo.scorekeeper:model:jar:1.0.0-SNAPSHOT")
+                        .withoutTransitivity()
                         .asSingleFile());
     }
 
@@ -58,8 +55,8 @@ public class MyTest {
     @OverProtocol("Servlet 3.0") // Avoid JBAS016000
     public static EnterpriseArchive importEar() {
         return Maven.resolver() // get resolver instance
-                .resolve("dk.jlo.scorekeeper:scorekeeper-ear:ear:1.0.0-SNAPSHOT") // get EAR from Maven repository - note you might want to set your own Maven repository first via document above
-                .withoutTransitivity() // Don't need any ear's transitive dependencies
+                .resolve("dk.jlo.scorekeeper:scorekeeper-ear:ear:1.0.0-SNAPSHOT") // get EAR from Maven repository
+                .withoutTransitivity() // Don't need any of the ear's transitive dependencies
                 .asSingle(EnterpriseArchive.class); // wrap the result as single object of type EnterpriseArchive
     }
 
@@ -67,9 +64,9 @@ public class MyTest {
     @InSequence(1)
 //    @UsingDataSet("tournaments.yml")
     @OperateOnDeployment("ArqPersistencePluginHack")
-    @Cleanup(phase = TestExecutionPhase.NONE)
+    @Cleanup(phase = TestExecutionPhase.NONE) // Avoid cleanup so that the real test can use the data.
     public void hackThePlugin() {
-        System.out.println("PLUGIN HACK!");
+        System.out.println("PLUGIN HACK!");  // Notice that JBoss logging is logging the println.
         assertThat(1, is(1));
     }
 
@@ -79,12 +76,13 @@ public class MyTest {
     @RunAsClient
     @Performance(time = 1000)
     public void test(@ArquillianResource URL testUrl) throws IOException {
-        System.out.println("URL:" + testUrl);
-        URL url = new URL("http://" + testUrl.getHost() + ":" + testUrl.getPort()
-                + "/ejb-1.0.0-SNAPSHOT/MatchWS/MatchWS");
-        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-        ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        String xmlInput = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
+        System.out.println("URL:" + testUrl); // Notice that System.out is logging the println.
+
+        WSClient wsClient = WSClient.forUrl("http://" + testUrl.getHost() + ":" + testUrl.getPort()
+                + "/ejb-1.0.0-SNAPSHOT/MatchWS/MatchWS")
+                .usingRequestProperty("SOAPAction", "createMatch");
+        // .usingRequestProperty("SOAPAction", "http://ws.scorekeeper.jlo.dk/createMatch");
+        wsClient.post("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
                 "xmlns:sc=\"http://ws.scorekeeper.jlo.dk/\">" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
@@ -96,36 +94,9 @@ public class MyTest {
                 "          <score2>2</score2>\n" +
                 "      </sc:createMatch>\n" +
                 "   </soapenv:Body>\n" +
-                "  </soapenv:Envelope>";
+                "  </soapenv:Envelope>");
 
-        bout.write(xmlInput.getBytes());
-        byte[] b = bout.toByteArray();
-        //String SOAPAction = "http://ws.scorekeeper.jlo.dk/createMatch";
-        // Set the appropriate HTTP parameters.
-        String SOAPAction = "createMatch";
-        httpConn.setRequestProperty("Content-Length", String.valueOf(b.length));
-        httpConn.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
-        httpConn.setRequestProperty("SOAPAction", SOAPAction);
-        httpConn.setRequestMethod("POST");
-        httpConn.setDoOutput(true);
-        httpConn.setDoInput(true);
-        OutputStream out = httpConn.getOutputStream();
-        //Write the content of the request to the output stream of the HTTP Connection.
-        out.write(b);
-        out.close();
-        //Ready with sending the request.
-
-        //Read the response.
-        InputStreamReader isr = new InputStreamReader(httpConn.getInputStream());
-        BufferedReader in = new BufferedReader(isr);
-
-        //Write the SOAP message response to a String.
-        String outputString = "";
-        String responseString;
-        while ((responseString = in.readLine()) != null) {
-            outputString = outputString + responseString;
-        }
-        System.out.println(outputString);
+        System.out.println(wsClient.getResponse());
         System.out.println("Webservice called.");
     }
 }
