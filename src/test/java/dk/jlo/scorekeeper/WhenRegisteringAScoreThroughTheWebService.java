@@ -36,14 +36,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @DataSource("java:/ds/postgresDS")
 @UsingDataSet("tournaments.yml")
 //@PerformanceTest(resultsThreshold = 1.5)
-public class MyTest {
+public class WhenRegisteringAScoreThroughTheWebService {
 
     @Deployment(testable = true, name = "ArqPersistencePluginHack", order = 0)
     @OverProtocol("Servlet 3.0") // Avoid JBAS016000
     public static EnterpriseArchive hackForPlugin() {
         return ShrinkWrap.create(EnterpriseArchive.class, "test.ear")
                 .addAsLibrary(ShrinkWrap.create(JavaArchive.class, "test.jar")
-                        .addClass(MyTest.class)
+                        .addClass(WhenRegisteringAScoreThroughTheWebService.class)
                         .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                         .addAsResource("META-INF/persistence.xml"))
                 .addAsLibrary(Maven.resolver().resolve("dk.jlo.scorekeeper:model:jar:1.0.0-SNAPSHOT")
@@ -62,7 +62,6 @@ public class MyTest {
 
     @Test
     @InSequence(1)
-//    @UsingDataSet("tournaments.yml")
     @OperateOnDeployment("ArqPersistencePluginHack")
     @Cleanup(phase = TestExecutionPhase.NONE) // Avoid cleanup so that the real test can use the data.
     public void hackThePlugin() {
@@ -75,7 +74,7 @@ public class MyTest {
     @OperateOnDeployment("scorekeeper")
     @RunAsClient
     @Performance(time = 1000)
-    public void test(@ArquillianResource URL testUrl) throws IOException {
+    public void theCallDoesNotFailBecauseOfUnknownTournament(@ArquillianResource URL testUrl) throws IOException {
         System.out.println("URL:" + testUrl); // Notice that System.out is logging the println.
 
         WSClient wsClient = WSClient.forUrl("http://" + testUrl.getHost() + ":" + testUrl.getPort()

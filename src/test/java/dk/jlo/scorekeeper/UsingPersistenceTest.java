@@ -6,7 +6,9 @@ import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.OverProtocol;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
-import org.jboss.arquillian.persistence.*;
+import org.jboss.arquillian.persistence.DataSource;
+import org.jboss.arquillian.persistence.PersistenceTest;
+import org.jboss.arquillian.persistence.UsingDataSet;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
@@ -17,7 +19,6 @@ import org.junit.runner.RunWith;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -55,8 +56,9 @@ public class UsingPersistenceTest {
     @OperateOnDeployment("ArqPersistencePluginHack")
     public void hackThePlugin() {
         System.out.println("PLUGIN HACK!");
-        assertThat(1, is(1));
 
         List<Tournament> result = em.createQuery("select t from Tournament t").getResultList();
+
+        assertThat(1, is(1));
     }
 }
