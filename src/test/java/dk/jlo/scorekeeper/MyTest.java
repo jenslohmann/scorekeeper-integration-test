@@ -116,8 +116,7 @@ public class MyTest {
         //Ready with sending the request.
 
         //Read the response.
-        InputStreamReader isr =
-                new InputStreamReader(httpConn.getInputStream());
+        InputStreamReader isr = new InputStreamReader(httpConn.getInputStream());
         BufferedReader in = new BufferedReader(isr);
 
         //Write the SOAP message response to a String.
