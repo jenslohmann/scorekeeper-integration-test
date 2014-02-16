@@ -13,8 +13,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.jboss.shrinkwrap.descriptor.api.Descriptor;
-import org.jboss.shrinkwrap.descriptor.api.Descriptors;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,12 +49,6 @@ public class UsingPersistenceTest {
                 .addAsLibrary(Maven.resolver().resolve("dk.jlo.scorekeeper:model:jar:1.0.0-SNAPSHOT").withoutTransitivity()
                         .asSingleFile());
     }
-
-    @Deployment(testable = false)
-    public Descriptor deployDatasource() {
-        Descriptors.create(DatasourceDescriptor.class)
-    }
-
 
     @Test
     @InSequence(1)
