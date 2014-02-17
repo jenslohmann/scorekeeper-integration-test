@@ -74,7 +74,7 @@ public class WhenRegisteringAScoreThroughTheWebService {
     @OperateOnDeployment("scorekeeper")
     @RunAsClient
     @Performance(time = 1000)
-    public void theCallDoesNotFailBecauseOfUnknownTournament(@ArquillianResource URL testUrl) throws IOException {
+    public void theCallShouldNotFailBecauseOfUnknownTournament(@ArquillianResource URL testUrl) throws IOException {
         System.out.println("URL:" + testUrl); // Notice that System.out is logging the println.
 
         WSClient wsClient = WSClient.forUrl("http://" + testUrl.getHost() + ":" + testUrl.getPort()
