@@ -30,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 //@CreateSchema({"schema-creation.sql"})
 @RunWith(Arquillian.class)
 @PersistenceTest
-@DataSource("java:/ds/postgresDS")
+@DataSource("jdbc/scorekeeperDS")
 @UsingDataSet("tournaments.yml")
 public class UsingPersistenceTest {
 

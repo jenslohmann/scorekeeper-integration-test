@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 //@CreateSchema({"schema-creation.sql"})
 @RunWith(Arquillian.class)
 @PersistenceTest
-@DataSource("java:/ds/postgresDS")
+@DataSource("jdbc/scorekeeperDS")
 @UsingDataSet("tournaments.yml")
 //@PerformanceTest(resultsThreshold = 1.5)
 public class WhenRegisteringAScoreThroughTheWebService {
@@ -78,8 +78,9 @@ public class WhenRegisteringAScoreThroughTheWebService {
         System.out.println("URL:" + testUrl); // Notice that System.out is logging the println.
 
         WSClient wsClient = WSClient.forUrl("http://" + testUrl.getHost() + ":" + testUrl.getPort()
-                + "/ejb-1.0.0-SNAPSHOT/MatchWS/MatchWS")
-                .usingRequestProperty("SOAPAction", "createMatch");
+                + "/scorekeeper/MatchWS/MatchWS")
+                .usingRequestProperty("SOAPAction", "createMatch")
+                .usingRequestProperty("Content-Type", "text/xml; charset=utf-8");
         // .usingRequestProperty("SOAPAction", "http://ws.scorekeeper.jlo.dk/createMatch");
         wsClient.post("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" " +
                 "xmlns:sc=\"http://ws.scorekeeper.jlo.dk/\">" +

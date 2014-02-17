@@ -93,6 +93,34 @@
             </dependencies>
         </profile>
         <profile>
+            <id>tomee160.workstation.jlo</id>
+            <properties>
+                <arquillian.launch>tomee160.workstation.jlo</arquillian.launch>
+            </properties>
+
+            <repositories>
+                <repository>
+                    <id>jenkins.jlo</id>
+                    <url>http://jenkins.jlo:8080/nexus/content/groups/public/</url>
+                </repository>
+            </repositories>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.openejb</groupId>
+                    <artifactId>apache-tomee</artifactId>
+                    <version>1.6.0</version>
+                    <classifier>plus</classifier>
+                    <type>zip</type>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.openejb</groupId>
+                    <artifactId>arquillian-tomee-remote</artifactId>
+                    <version>1.6.0</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>glassfish4.workstation.jlo</id>
             <properties>
                     <arquillian.launch>glassfish4.workstation.jlo</arquillian.launch>

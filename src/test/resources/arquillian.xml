@@ -38,6 +38,15 @@
             </property>
         </configuration>
     </container>
+    <container qualifier="tomee160.workstation.jlo">
+        <configuration>
+            <!-- Don't do periodic GC during test -->
+            <property name="javaVmArguments">-Dsun.rmi.dgc.client.gcInterval=3600000
+                -Dsun.rmi.dgc.server.gcInterval=3600000
+                -Xmx512m -Xmx768m -XX:MaxPermSize=256m
+            </property>
+        </configuration>
+    </container>
     <container qualifier="glassfish4.workstation.jlo">
         <configuration>
             <property name="glassFishHome">/Users/jens/apps/glassfish4</property>
