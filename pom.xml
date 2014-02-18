@@ -41,6 +41,12 @@
             <properties>
                 <arquillian.launch>jenkins.jlo</arquillian.launch>
             </properties>
+            <repositories>
+                <repository>
+                    <id>jenkins.jlo</id>
+                    <url>http://jenkins.jlo:8080/nexus/content/groups/public/</url>
+                </repository>
+            </repositories>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.as</groupId>
