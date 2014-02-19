@@ -10,6 +10,27 @@ tournaments:
   - id: 1
     version: 1
     name: A
+  - id: 2
+    version: 1
+    name: Casual
   - id: 4
     version: 1
     name: Flyveskalle Head to Head
+
+matches:
+  - id: 1
+    version: 1
+    time: 2014-06-12 14:14:13
+    tnmt_id: 2
+
+scores:
+  - id: 1
+    version: 1
+    mtch_id: 1
+    team_id: 1
+    score: 1
+  - id: 2
+    version: 1
+    mtch_id: 1
+    team_id: 2
+    score: 2
