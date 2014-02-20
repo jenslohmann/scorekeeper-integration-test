@@ -74,4 +74,13 @@
     <!--extension qualifier="transaction">
         <property name="manager">java:jboss/UserTransaction</property>
     </extension -->
+    <!-- configuration for graphene2 -->
+    <extension qualifier="webdriver">
+        <!-- Renamed since blogpost.
+        <property name="browserCapabilities">firefox</property -->
+        <property name="browser">chrome</property>
+        <!-- Reuse open browser in consecutive tests. -->
+        <property name="remoteReusable">true</property>
+        <!-- property name="remoteAddress">http://localhost:4444/wd/hub</property -->
+    </extension>
 </arquillian>

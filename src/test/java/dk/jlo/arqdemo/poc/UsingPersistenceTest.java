@@ -1,4 +1,4 @@
-package dk.jlo.scorekeeper;
+package dk.jlo.arqdemo.poc;
 
 import dk.jlo.scorekeeper.model.Tournament;
 import org.jboss.arquillian.container.test.api.Deployment;
